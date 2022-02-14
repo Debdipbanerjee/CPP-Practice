@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 
 using namespace std;
 
@@ -36,17 +37,21 @@ class Point
 {
 public:
 	float x, y;
+	string name;
 
 	Point()
 	{
 		x = 0;
 		y = 0;
+		name = "p0";
 	}
 
-	Point(float x_new, float y_new)
+	Point(float x_new, float y_new, string name_new)
 	{
 		x = x_new;
 		y = y_new;
+
+		name = name_new;
 	}
 
 	Point AddVector(Vector v)
@@ -76,22 +81,35 @@ Vector operator-(Point a, Point b)
 
 
 
+
+
+Vector GiveMeVector(Point p1, Point p2)
+{
+	return (p1 - p2);
+}
+
+
+
+Point WhoIsCloser(Point p1, Point p2, Point p3)
+{
+	Vector v12 = GiveMeVector(p1, p2);
+	Vector v13 = GiveMeVector(p1, p3);
+
+	if (v12.Length() < v13.Length()) return p2;
+	if (v12.Length() > v13.Length()) return p3;
+}
+
 int main()
 {
-	Point p1(2, 3);
-	//Vector v(4, 6);
-	Point p2(5, 7);
+	Point p1(2, 3, "p1");
+	Point p2(5, 7, "p2");
+	Point p3(1, 2, "p3");
 
-	//Point p2 = p1.AddVector(v);
-	Vector v = p1 - p2;
-	
+	cout << "the closest is " << WhoIsCloser(p1, p2, p3).name << endl;
 
-	//cout << "p2(" << p2.x << "," << p2.y <<")"<< endl;
-	//cout << "v(" << v.x << "," << v.y << ")" <<endl;
-	cout << "Length : " << v.Length() << endl;
+
 
 	return 0;
 
 }
-
 
