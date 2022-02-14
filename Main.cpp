@@ -19,6 +19,15 @@ public:
 		y = y_new;
 	}
 
+	float Length() const
+	{
+		float length;
+
+		length = sqrt(x * x + y * y);
+
+		return length;
+	}
+
 	
 	
 };
@@ -28,35 +37,31 @@ class Point
 public:
 	float x, y;
 
-	Point();
-	Point(float x_new, float y_new);
-	Point AddVector(Vector v);
-	
-	
+	Point()
+	{
+		x = 0;
+		y = 0;
+	}
 
+	Point(float x_new, float y_new)
+	{
+		x = x_new;
+		y = y_new;
+	}
+
+	Point AddVector(Vector v)
+	{
+		Point p;
+
+		p.x = x + v.x;
+		p.y = y + v.y;
+
+		return p;;
+	}
 };
 
-Point::Point()
-{
-	x = 0;
-	y = 0;
-}
 
-Point::Point(float x_new, float y_new)
-{
-	x = x_new;
-	y = y_new;
-}
 
-Point Point::AddVector(Vector v)
-{
-	Point p;
-
-	p.x = x + v.x;
-	p.y = y + v.y;
-
-	return p;;
-}
 
 Vector operator-(Point a, Point b)
 {
@@ -78,10 +83,12 @@ int main()
 	Point p2(5, 7);
 
 	//Point p2 = p1.AddVector(v);
-	Vector v = p2 - p1;
+	Vector v = p1 - p2;
+	
 
 	//cout << "p2(" << p2.x << "," << p2.y <<")"<< endl;
-	cout << "v(" << v.x << "," << v.y << ")" <<endl;
+	//cout << "v(" << v.x << "," << v.y << ")" <<endl;
+	cout << "Length : " << v.Length() << endl;
 
 	return 0;
 
