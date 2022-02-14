@@ -7,11 +7,20 @@ class Vector
 public:
 	float x, y;
 
-	Vector(int x_new, int y_new)
+	Vector()
+	{
+		x = 0;
+		y = 0;
+	}
+
+	Vector(float x_new, float y_new)
 	{
 		x = x_new;
 		y = y_new;
 	}
+
+	
+	
 };
 
 class Point
@@ -20,7 +29,7 @@ public:
 	float x, y;
 
 	Point();
-	Point(int x_new, int y_new);
+	Point(float x_new, float y_new);
 	Point AddVector(Vector v);
 	
 	
@@ -33,7 +42,7 @@ Point::Point()
 	y = 0;
 }
 
-Point::Point(int x_new, int y_new)
+Point::Point(float x_new, float y_new)
 {
 	x = x_new;
 	y = y_new;
@@ -49,16 +58,30 @@ Point Point::AddVector(Vector v)
 	return p;;
 }
 
+Vector operator-(Point a, Point b)
+{
+	Vector v;
+
+	v.x = a.x - b.x;
+	v.y = a.y - b.y;
+
+	return v;
+
+}
+
 
 
 int main()
 {
 	Point p1(2, 3);
-	Vector v(4, 6);
+	//Vector v(4, 6);
+	Point p2(5, 7);
 
-	Point p2 = p1.AddVector(v);
+	//Point p2 = p1.AddVector(v);
+	Vector v = p2 - p1;
 
-	cout << "p2(" << p2.x << "," << p2.y <<")"<< endl;
+	//cout << "p2(" << p2.x << "," << p2.y <<")"<< endl;
+	cout << "v(" << v.x << "," << v.y << ")" <<endl;
 
 	return 0;
 
