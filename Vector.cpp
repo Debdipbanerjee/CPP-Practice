@@ -23,6 +23,28 @@ vector vector::GiveMeUnitVector(Point P2, Point P1)
 	
 }
 
+vector vector::vectorAdditon(vector v1, vector v2)
+{
+	vector v;
+
+	v.x = v1.x + v2.x;
+	v.y = v1.y + v2.y;
+
+	return v;
+}
+
+vector::vector()
+{
+	x = 0;
+	y = 0;
+}
+
+vector::vector(float X, float Y)
+{
+	x = X;
+	y = Y;
+}
+
 float vector::GiveMeLength(Point P2, Point P1)
 {
 	vector v = GiveMeVector(P2, P1);
