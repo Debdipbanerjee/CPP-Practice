@@ -2,7 +2,7 @@
 #include "Vector.h"
 #include "Point.h"
 
-vector vector::GiveMeVector(Point P2, Point P1)
+vector vector::Vector(Point P2, Point P1)
 {
 	vector v;
 
@@ -12,18 +12,18 @@ vector vector::GiveMeVector(Point P2, Point P1)
 	return v;
 }
 
-vector vector::GiveMeUnitVector(Point P2, Point P1)
+vector vector::UnitVector(Point P2, Point P1)
 {
-	vector v = GiveMeVector(P2,P1);
+	vector v = Vector(P2,P1);
 
-	v.x = v.x / GiveMeLength(P2, P1);
-	v.y = v.y / GiveMeLength(P2, P1);
+	v.x = v.x / Length(P2, P1);
+	v.y = v.y / Length(P2, P1);
 
 	return v;
 	
 }
 
-vector vector::vectorAdditon(vector v1, vector v2)
+vector vector::Addition(vector v1, vector v2)
 {
 	vector v;
 
@@ -31,6 +31,11 @@ vector vector::vectorAdditon(vector v1, vector v2)
 	v.y = v1.y + v2.y;
 
 	return v;
+}
+
+float vector::dotProduct(vector v1, vector v2)
+{
+	return v1.x * v2.x + v1.y * v2.y;
 }
 
 vector::vector()
@@ -45,8 +50,8 @@ vector::vector(float X, float Y)
 	y = Y;
 }
 
-float vector::GiveMeLength(Point P2, Point P1)
+float vector::Length(Point P2, Point P1)
 {
-	vector v = GiveMeVector(P2, P1);
+	vector v = Vector(P2, P1);
 	return sqrt(v.x * v.x + v.y * v.y);
 }
