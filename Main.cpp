@@ -1,12 +1,13 @@
 
 #include <iostream>
-
+#include <vector>
 
 class Queue
 {
 
 private:
 	int front, rear;
+	int first = 0;
 
 public:
 
@@ -21,20 +22,33 @@ public:
 		std::cout << "Queue of Size " << size << " created" << std::endl;
 	}
 
-	// Operations
+	// Default Operations
 	void PrintQueue();
 	void Push(int value);
 	void Pop();
 	bool isEmpty();
 	bool isFull();
 
+	// Extra operations
+	bool isSpaceinFront();
+	void Reorganise();
+
 };
 
 void Queue::Push(int Value)
 {
-	if (isFull())
+	// if it's full and NO space in front .
+	if (isFull() && !isSpaceinFront())
 	{
+		std::cout << "Queue is Full, Please Pop some elements" << std::endl;
 		return;
+	}
+
+	// if Queue is full and there's space in front
+	if (isFull() && isSpaceinFront())
+	{
+		Reorganise();
+
 	}
 
 	rear++;
@@ -66,7 +80,6 @@ bool Queue::isFull()
 {
 	if (rear == size - 1)
 	{
-		std::cout << "Queue is Full" << std::endl;
 		return true;
 	}
 
@@ -85,6 +98,37 @@ void Queue::PrintQueue()
 		std::cout << array[i] << " ";
 	}
 
+	std::cout << std::endl;
+}
+
+bool Queue::isSpaceinFront()
+{
+	if (front - first >= 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void Queue::Reorganise()
+{
+	int numOfElements = rear - front;
+
+	std::vector<int> temp;
+
+	for (int i = front + 1; i <= rear; ++i)
+	{
+		temp.push_back(array[i]);
+	}
+
+	for (int i = first; i < numOfElements; ++i)
+	{
+		array[i] = temp[i];
+	}
+
+	front = -1;
+	rear = numOfElements - 1;
 }
 
 int main()
@@ -96,12 +140,10 @@ int main()
 	Q.Push(9);
 	Q.Push(10);
 	Q.Push(2);
-	
+	Q.Push(4);
+	Q.PrintQueue();
 
 	Q.Pop();
-	Q.Pop();
-	Q.Pop();
-
 
 	Q.Push(4);
 
