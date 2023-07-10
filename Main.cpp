@@ -1,71 +1,55 @@
 
 #include <iostream>
-#include <vector>
 
-class Queue
+class CircularQueue
 {
-
 private:
 	int front, rear;
-	int first = 0;
+
+	static const int size = 6;
+	int array[size] = {0};
 
 public:
-
-	// Member variables
-	static const int size = 5;
-	int array[size] = {0}; // initialize with zero
 	
+	//Constructors
 
-	// Constructors
-	Queue() : front(-1), rear(-1)
+	CircularQueue() : front(0), rear(0)
 	{
-		std::cout << "Queue of Size " << size << " created" << std::endl;
+
 	}
 
-	// Default Operations
-	void PrintQueue();
+	//Basic Operations
 	void Push(int value);
 	void Pop();
 	bool isEmpty();
 	bool isFull();
-
-	// Extra operations
-	bool isSpaceinFront();
-	void Reorganise();
+	void PrintQueue();
 
 };
 
-void Queue::Push(int Value)
+void CircularQueue::Push(int value)
 {
-	// if it's full and NO space in front .
-	if (isFull() && !isSpaceinFront())
+	if (isFull())
 	{
-		std::cout << "Queue is Full, Please Pop some elements" << std::endl;
-		return;
+		Pop();
+		//return;
 	}
 
-	// if Queue is full and there's space in front
-	if (isFull() && isSpaceinFront())
-	{
-		Reorganise();
-
-	}
-
-	rear++;
-	array[rear] = Value;
+	array[rear] = value;
+	rear = (rear + 1) % size;
 }
 
-void Queue::Pop()
+void CircularQueue::Pop()
 {
 	if (isEmpty())
 	{
 		return;
 	}
 
-	front++;
+	front = (front + 1) % size;
 }
 
-bool Queue::isEmpty()
+bool CircularQueue::isEmpty()
 {
 	if (front == rear)
 	{
@@ -76,78 +60,57 @@ bool Queue::isEmpty()
 	return false;
 }
 
-bool Queue::isFull()
+bool CircularQueue::isFull()
 {
-	if (rear == size - 1)
+	if (front == (rear + 1) % size)
 	{
+		std::cout << "Queue is Full" << std::endl;
 		return true;
 	}
 
 	return false;
 }
 
-void Queue::PrintQueue()
+void CircularQueue::PrintQueue()
 {
+	/*for (int i = 0; i < size; ++i)
+	{
+		std::cout << array[i] << " ";
+	}*/
+
 	if (isEmpty())
 	{
 		return;
 	}
 
-	for (int i = front + 1; i <= rear; ++i)
+
+	int i = front;
+	while (i != rear)
 	{
 		std::cout << array[i] << " ";
-	}
 
+		i = (i + 1) % size;
+	}
 	std::cout << std::endl;
-}
-
-bool Queue::isSpaceinFront()
-{
-	if (front - first >= 0)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-void Queue::Reorganise()
-{
-	int numOfElements = rear - front;
-
-	std::vector<int> temp;
-
-	for (int i = front + 1; i <= rear; ++i)
-	{
-		temp.push_back(array[i]);
-	}
-
-	for (int i = first; i < numOfElements; ++i)
-	{
-		array[i] = temp[i];
-	}
-
-	front = -1;
-	rear = numOfElements - 1;
 }
 
 int main()
 {
-	Queue Q;
+	CircularQueue CQ;
 
-	Q.Push(5);
-	Q.Push(7);
-	Q.Push(9);
-	Q.Push(10);
-	Q.Push(2);
-	Q.Push(4);
-	Q.PrintQueue();
+	CQ.Push(5);
+	CQ.Push(6);
+	CQ.Push(7);
+	CQ.Push(8);
+	CQ.Push(9);
+	CQ.Push(10);
+	CQ.Push(11);
+	CQ.Push(12);
+	CQ.Push(13);
 
-	Q.Pop();
 
-	Q.Push(4);
 
-	Q.PrintQueue();
+	CQ.PrintQueue();
 
 	return 0;
 }
